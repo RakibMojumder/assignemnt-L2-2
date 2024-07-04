@@ -11,6 +11,7 @@ route
 route
     .route('/:productId')
     .get(productController.getSingleProduct)
+    .put(productController.updateProduct)
     .delete(productController.deleteProduct);
 
 const productRoute = route;

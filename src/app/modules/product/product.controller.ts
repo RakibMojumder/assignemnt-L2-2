@@ -75,6 +75,20 @@ const getSingleProduct = async (req: Request, res: Response) => {
     });
 };
 
+const updateProduct = async (req: Request, res: Response) => {
+    const updatedData = req.body;
+    const response = await productService.updateProductIntoDB(
+        req.params.productId,
+        updatedData
+    );
+
+    res.status(200).json({
+        success: true,
+        message: 'Product updated successfully!',
+        data: response,
+    });
+};
+
 const deleteProduct = async (req: Request, res: Response) => {
     try {
         const isProductExists = await Product.isProductExists(
@@ -105,4 +119,5 @@ export default {
     getAllProduct,
     getSingleProduct,
     deleteProduct,
+    updateProduct,
 };
