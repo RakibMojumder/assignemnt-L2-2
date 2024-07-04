@@ -1,17 +1,29 @@
 import { Schema, model } from 'mongoose';
-import { TInventory, TProduct, TVariants } from './product.interface';
+import {
+    ProductMethods,
+    ProductModel,
+    TInventory,
+    TProduct,
+    TVariants,
+} from './product.interface';
 
-const variantsSchema = new Schema<TVariants>({
-    type: { type: String, required: true },
-    value: { type: String, required: true },
-});
+const variantsSchema = new Schema<TVariants>(
+    {
+        type: { type: String, required: true },
+        value: { type: String, required: true },
+    },
+    { _id: false }
+);
 
-const inventorySchema = new Schema<TInventory>({
-    quantity: { type: Number, required: true },
-    inStock: { type: Boolean, default: true },
-});
+const inventorySchema = new Schema<TInventory>(
+    {
+        quantity: { type: Number, required: true },
+        inStock: { type: Boolean, default: true },
+    },
+    { _id: false }
+);
 
-const productSchema = new Schema<TProduct>({
+const productSchema = new Schema<TProduct, ProductModel, ProductMethods>({
     name: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
@@ -21,4 +33,10 @@ const productSchema = new Schema<TProduct>({
     inventory: inventorySchema,
 });
 
-export const Product = model<TProduct>('Product', productSchema);
+productSchema.statics.isProductExists = async (productId: string) => {
+    const result = await Product.findById({ _id: productId });
+
+    return result?._id;
+};
+
+export const Product = model<TProduct, ProductModel>('Product', productSchema);

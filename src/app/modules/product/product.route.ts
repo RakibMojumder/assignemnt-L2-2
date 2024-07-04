@@ -3,7 +3,15 @@ import productController from './product.controller';
 
 const route = express.Router();
 
-route.post('/', productController.createProduct);
+route
+    .route('/')
+    .post(productController.createProduct)
+    .get(productController.getAllProduct);
+
+route
+    .route('/:productId')
+    .get(productController.getSingleProduct)
+    .delete(productController.deleteProduct);
 
 const productRoute = route;
 export default productRoute;
