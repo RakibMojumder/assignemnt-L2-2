@@ -12,27 +12,21 @@ const createProductIntoDB = async (productData: TProduct) => {
 
 const getAllProductsFromDB = async (searchValue: string | undefined) => {
     try {
-        let response;
+        let query;
 
         if (searchValue) {
-            response = await Product.aggregate([
-                {
-                    $match: {
-                        $or: [
-                            { name: new RegExp(searchValue, 'i') },
-                            { category: new RegExp(searchValue, 'i') },
-                            { description: new RegExp(searchValue, 'i') },
-                        ],
-                    },
-                },
-                {
-                    $project: { _id: 0, __v: 0 },
-                },
-            ]);
+            query = {
+                $or: [
+                    { name: new RegExp(searchValue, 'i') },
+                    { category: new RegExp(searchValue, 'i') },
+                    { description: new RegExp(searchValue, 'i') },
+                ],
+            };
         } else {
-            response = await Product.find({}).select('-_id -__v');
+            query = {};
         }
 
+        const response = await Product.find(query).select('-_id -__v');
         return response;
     } catch (error) {
         console.log(error);
