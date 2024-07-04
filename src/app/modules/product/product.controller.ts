@@ -3,6 +3,10 @@ import productValidationSchema from './product.validation';
 import productService from './product.service';
 import { Product } from './product.model';
 
+interface SearchTerm {
+    searchTerm: string;
+}
+
 const createProduct = async (req: Request, res: Response) => {
     try {
         const productData = req.body;
@@ -22,9 +26,18 @@ const createProduct = async (req: Request, res: Response) => {
     }
 };
 
-const getAllProduct = async (req: Request, res: Response) => {
+const getAllProduct = async (
+    req: Request<
+        Record<string, never>,
+        Record<string, never>,
+        Record<string, never>,
+        SearchTerm
+    >,
+    res: Response
+) => {
     try {
-        const response = await productService.getAllProductsFromDB();
+        const searchValue = req.query?.searchTerm;
+        const response = await productService.getAllProductsFromDB(searchValue);
 
         if (response?.length === 0) {
             res.status(400).json({
