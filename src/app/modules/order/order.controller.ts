@@ -3,6 +3,10 @@ import orderValidationSchema from './order.validation';
 import Order from './order.model';
 import orderService from './order.service';
 
+interface SearchTerm {
+    email: string;
+}
+
 const createOrder = async (req: Request, res: Response) => {
     try {
         const data = orderValidationSchema.parse(req.body);
@@ -26,9 +30,18 @@ const createOrder = async (req: Request, res: Response) => {
     }
 };
 
-const getAllOrder = async (req: Request, res: Response) => {
+const getAllOrder = async (
+    req: Request<
+        Record<string, never>,
+        Record<string, never>,
+        Record<string, never>,
+        SearchTerm
+    >,
+    res: Response
+) => {
     try {
-        const response = await orderService.getAllOrderFromDB();
+        const email = req.query?.email;
+        const response = await orderService.getAllOrderFromDB(email);
 
         if (response.length === 0) {
             return res.status(404).json({
