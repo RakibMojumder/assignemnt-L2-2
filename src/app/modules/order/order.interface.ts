@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Model, SchemaDefinitionProperty } from 'mongoose';
 import { TProduct } from '../product/product.interface';
 

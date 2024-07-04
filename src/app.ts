@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import productRoute from './app/modules/product/product.route';
@@ -22,7 +24,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // SERVER ERROR
-app.use((err, req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(500).send('Something is broken');
 });
 

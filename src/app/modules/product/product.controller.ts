@@ -18,7 +18,7 @@ const createProduct = async (req: Request, res: Response) => {
             message: 'Product created successfully!',
             data: response,
         });
-    } catch (error: any) {
+    } catch (error) {
         res.json({
             success: false,
             message: error.issues[0].message,
@@ -51,7 +51,7 @@ const getAllProduct = async (
             message: 'Product fetched successfully!',
             data: response,
         });
-    } catch (error: any) {
+    } catch (error) {
         console.log(error);
     }
 };

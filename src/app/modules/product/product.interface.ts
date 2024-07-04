@@ -24,5 +24,6 @@ export interface ProductMethods {}
 
 export interface ProductModel
     extends Model<TProduct, Record<string, never>, ProductMethods> {
+    // eslint-disable-next-line no-unused-vars
     isProductExists: (productId: string) => Promise<TProduct | null>;
 }

@@ -56,7 +56,7 @@ const getAllOrder = async (
             data: response,
         });
     } catch (error) {
-        console.log(object);
+        console.log(error);
     }
 };
 
