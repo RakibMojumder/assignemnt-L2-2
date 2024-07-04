@@ -44,7 +44,8 @@ const getSingleProductFromDB = async (productId: string) => {
     }
 };
 
-const updateProductIntoDB = async (productId: string, updatedData) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const updateProductIntoDB = async (productId: string, updatedData: any) => {
     const response = await Product.findByIdAndUpdate(
         { _id: productId },
         updatedData,

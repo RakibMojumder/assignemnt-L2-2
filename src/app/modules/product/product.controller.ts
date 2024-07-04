@@ -21,7 +21,7 @@ const createProduct = async (req: Request, res: Response) => {
     } catch (error) {
         res.json({
             success: false,
-            message: error.issues[0].message,
+            message: error,
         });
     }
 };
